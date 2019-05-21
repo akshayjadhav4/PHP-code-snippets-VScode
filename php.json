@@ -1,0 +1,74 @@
+{
+	// Place your snippets for php here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+
+	"PHP Connection String": {
+			"prefix": "pconn",
+			"body": [
+				"//Enter all variable name starting with $",
+				"${1:serevername} = '$2';",
+				"${3:username} = '$4';",
+				"${5:password} = '$6';",
+
+				"try {",
+				"${7:connectionvariable} = new PDO(${10:enter quote}mysql:host=${1:serevername};dbname=${8:dbname}${10:enter quote},${3:username},${5:password});",
+				"${7:connectionvariable}->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);",
+		
+				"} catch (PDOException ${9:exceptionname}) {",
+					"echo 'Connection Failed : '.${9:exceptionname}->getMessage();",
+				"}"
+				
+			],
+			"description": "Make connection to database"
+		}	,
+
+		"Insert query": {
+		"prefix": "insert",
+		"body": [
+			"//Add colname and corresponding value as required",
+			"${1:QueryVariable} = ${2:connectionvariable} ->prepare(${3:enter quote}INSERT INTO ${4:TableName} (${5:colname_1}, ${6:colname_2}) VALUES (:${7:parameter},:${8:parameter})${3:enter quote});",
+			"${1:QueryVariable}->bindParam(':${7:parameter}', ${9:value1});",
+			"${1:QueryVariable}->bindParam(':${8:parameter}', ${10:value2});",
+			"${1:QueryVariable}->execute();"
+		],
+		"description": "Insert Query structure"
+	},
+
+	"Update query": {
+		"prefix": "update",
+		"body": [
+			"//Add colname and corresponding value as required",
+			"${1:QueryVariable} = ${2:connectionvariable} ->prepare(${3:enter quote}UPDATE ${4:TableName} SET ${5:colname} = :${7:parameter}, ${6:colname} = :${8:parameter} WHERE ${9:colname}=:${10:parameter}${3:enter quote});",
+			"${1:QueryVariable}->bindParam(':${7:parameter}', ${11:value});",
+			"${1:QueryVariable}->bindParam(':${8:parameter}', ${12:value});",
+			"${1:QueryVariable}->bindParam(':${10:parameter}', ${13:value});",
+			"${1:QueryVariable}->execute();",
+		],
+		"description": "Update Query structure"
+	},
+
+	"Delete query": {
+		"prefix": "delete",
+		"body": [
+			"//Add colname and corresponding value as required",
+			"${1:QueryVariable} = ${2:connectionvariable} ->prepare(${3:enter quote}DELETE FROM  ${4:TableName} WHERE ${5:colname} = :${6:parameter}${3:enter quote});",
+			"${1:QueryVariable}->bindParam(':${6:parameter}', ${7:value});",
+			"${1:QueryVariable}->execute();"
+		],
+		"description": "Delete Query structure"
+	}
+
+
+
+}
